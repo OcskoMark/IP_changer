@@ -19,15 +19,45 @@ public class Menu {
     }
 
     private void printOptions() {
-        System.out.println("Kérem válasszon az alábbi lehetőségek közül:");
-        System.out.println("1 - IP-cím megadása és átváltása (decimális és bináris formátum között)");
-        System.out.println("2 - Dolgozat írása");
-        System.out.println("3 - Kilépés");
+        System.out.println("Please, choose from the options below:");
+        System.out.println("1 - IP address change (between decimal and binary form)");
+        System.out.println("2 - Exam");
+        System.out.println("3 - Quit");
     }
 
     private void printWelcome() {
-        System.out.println("Üdvözöljük az IP-cím váltó programban!");
+        System.out.println("Welcome to the IP address changer program!");
         isFirst = false;
+    }
+
+    private void makeExam() {
+        Exam exam = new Exam();
+    }
+
+    private void addIPAddress() {
+        boolean isValidAddress = false;
+        Scanner reader = new Scanner(System.in);
+        String input = "";
+
+        while (!isValidAddress && !(input.equals("q"))) {
+            System.out.println();
+            System.out.println("(Back to the main menu: 'q')");
+            System.out.println("Please, type an IP address (in decimal or binary form)!");
+            input = reader.nextLine();
+
+            if (IPAddress.checkIPAddressIsValid(input)) {
+                isValidAddress = true;
+                IPAddress ipAddress = new IPAddress(input);
+                System.out.println();
+                ipAddress.printChangedIPAddress();
+            } else {
+                System.out.println();
+                System.out.println("The IP address is incorrect (invalid value or form)!");
+                System.out.println("Please, type a correct IP address!");
+            }
+        }
+
+        System.out.println();
     }
 
     public void handleOptions() {
@@ -48,43 +78,18 @@ public class Menu {
                     break;
 
                 case "2":
-                    //doExam();
+                    makeExam();
                     break;
+
                 case "3":
-                    System.out.println("Viszontlátásra!");
+                    System.out.println("Goodbye!");
                     System.exit(0);
 
                 default:
-                    System.out.println("Helytelen inputot adott meg!");
+                    System.out.println("Wrong input! Please, type a correct input!");
                     System.out.println();
                     break;
             }
         }
-    }
-
-    private void addIPAddress() {
-        boolean isValidAddress = false;
-        Scanner reader = new Scanner(System.in);
-        String input = "";
-
-        while (!isValidAddress && !(input.equals("q"))) {
-            System.out.println();
-            System.out.println("(Visszalépés a főmenübe: 'q')");
-            System.out.println("Kérem adja meg az IP-címet (decimális vagy bináris formában)!");
-            input = reader.nextLine();
-
-            if (IPAddress.checkIPAddressIsValid(input)) {
-                isValidAddress = true;
-                IPAddress ipAddress = new IPAddress(input);
-                System.out.println();
-                ipAddress.printChangedIPAddress();
-            } else {
-                System.out.println();
-                System.out.println("Helytelen IP-címet adott meg (vagy helytelen a formátum)!");
-                System.out.println("Kérem, helyes formátumban adja meg az IP címet!");
-            }
-        }
-
-        System.out.println();
     }
 }
