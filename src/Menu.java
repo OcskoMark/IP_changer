@@ -1,7 +1,4 @@
-import java.util.Random;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Menu {
     private static Menu INSTANCE;

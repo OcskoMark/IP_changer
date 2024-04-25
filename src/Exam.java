@@ -1,6 +1,5 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class Exam {
     private static final int NUMBER_OF_TASKS = 10;
