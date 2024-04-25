@@ -56,14 +56,14 @@ public class IPAddress {
     }
 
     private String generateRandomDecimalAddress() {
-        String address = "";
+        StringBuilder address = new StringBuilder();
         Random random = new Random();
 
         for (int i = 0; i < NUMBER_OF_OCTETS; i++) {
-            address += (random.nextInt(255) + 1) + ".";
+            address.append((random.nextInt(255) + 1)).append(".");
         }
 
-        return deleteLastDot(address);
+        return deleteLastDot(address.toString());
     }
 
     private String[] getOctets(String address) {
@@ -71,24 +71,25 @@ public class IPAddress {
     }
 
     private String convertToDecimalAddress(String[] binaryOctets) {
-        String address = "";
+        StringBuilder address = new StringBuilder();
 
         for (int i = 0; i < NUMBER_OF_OCTETS; i++) {
-            address += Integer.parseInt(binaryOctets[i], 2) + ".";
+            address.append(Integer.parseInt(binaryOctets[i], 2)).append(".");
         }
 
-        return deleteLastDot(address);
+        return deleteLastDot(address.toString());
     }
 
     private String convertToBinaryAddress(String[] decimalOctets) {
-        String address = "";
+        StringBuilder address = new StringBuilder();
 
         for (int i = 0; i < NUMBER_OF_OCTETS; i++) {
             String binaryOctet = Integer.toBinaryString(Integer.parseInt(decimalOctets[i]));
-            address += String.join("", Collections.nCopies((8 - binaryOctet.length()), "0")) + binaryOctet + ".";
+            address.append(String.join("",
+                    Collections.nCopies((8 - binaryOctet.length()), "0"))).append(binaryOctet).append(".");
         }
 
-        return deleteLastDot(address);
+        return deleteLastDot(address.toString());
     }
 
     public void printChangedIPAddress() {

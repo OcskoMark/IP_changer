@@ -65,7 +65,7 @@ public class Menu {
         String input = "";
         Scanner reader = new Scanner(System.in);
 
-        while (!(input.equals(EXIT))) {
+        while (true) {
             printOptions();
             input = reader.nextLine();
 
