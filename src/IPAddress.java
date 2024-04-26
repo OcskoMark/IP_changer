@@ -96,7 +96,7 @@ public class IPAddress {
         if (isDecimal) {
             System.out.println("The IP address in binary form: " + binaryAddress);
         } else {
-            System.out.println("The IP address in decimal form: " + getDecimalAddress());
+            System.out.println("The IP address in decimal form: " + decimalAddress);
         }
     }
 
