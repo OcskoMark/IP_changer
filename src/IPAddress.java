@@ -8,7 +8,7 @@ public class IPAddress {
     private String decimalAddress = "";
     private String binaryAddress = "";
 
-    private boolean isDecimal;
+    private boolean decimal;
 
     private static final String DECIMAL_IP_REGEX = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$";
     private static final Pattern DECIMAL_IP_FORMAT = Pattern.compile(DECIMAL_IP_REGEX);
@@ -18,18 +18,25 @@ public class IPAddress {
     public IPAddress(String address) {
         if (checkIsValidDecimalIPAddress(address)) {
             this.decimalAddress = address;
-            this.isDecimal = true;
+            this.decimal = true;
 
             this.binaryAddress = convertToBinaryAddress(getOctets(this.decimalAddress));
         } else {
             this.binaryAddress = address;
             this.decimalAddress = convertToDecimalAddress(getOctets(this.binaryAddress));
-            this.isDecimal = false;
+            this.decimal = false;
         }
     }
 
     public IPAddress() {
-        this.decimalAddress = generateRandomDecimalAddress();
+        StringBuilder address = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < NUMBER_OF_OCTETS; i++) {
+            address.append((random.nextInt(255) + 1)).append(".");
+        }
+
+        this.decimalAddress = deleteLastDot(address.toString());
         this.binaryAddress = convertToBinaryAddress(getOctets(this.decimalAddress));
     }
 
@@ -53,17 +60,6 @@ public class IPAddress {
         } else {
             return address;
         }
-    }
-
-    private String generateRandomDecimalAddress() {
-        StringBuilder address = new StringBuilder();
-        Random random = new Random();
-
-        for (int i = 0; i < NUMBER_OF_OCTETS; i++) {
-            address.append((random.nextInt(255) + 1)).append(".");
-        }
-
-        return deleteLastDot(address.toString());
     }
 
     private String[] getOctets(String address) {
@@ -92,12 +88,8 @@ public class IPAddress {
         return deleteLastDot(address.toString());
     }
 
-    public void printChangedIPAddress() {
-        if (isDecimal) {
-            System.out.println("The IP address in binary form: " + binaryAddress);
-        } else {
-            System.out.println("The IP address in decimal form: " + decimalAddress);
-        }
+    public boolean isDecimal() {
+        return decimal;
     }
 
     public String getDecimalAddress() {

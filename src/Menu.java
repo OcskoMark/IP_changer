@@ -15,22 +15,6 @@ public class Menu {
         return INSTANCE;
     }
 
-    private void printOptions() {
-        System.out.println("Please, choose from the options below:");
-        System.out.println("1 - IP address change (between decimal and binary form)");
-        System.out.println("2 - Exam");
-        System.out.println("3 - Quit");
-    }
-
-    private void printWelcome() {
-        System.out.println("Welcome to the IP address changer program!");
-        isFirst = false;
-    }
-
-    private void makeExam() {
-        Exam exam = new Exam();
-    }
-
     private void addIPAddress() {
         boolean isValidAddress = false;
         Scanner reader = new Scanner(System.in);
@@ -46,7 +30,13 @@ public class Menu {
                 isValidAddress = true;
                 IPAddress ipAddress = new IPAddress(input);
                 System.out.println();
-                ipAddress.printChangedIPAddress();
+
+                if (ipAddress.isDecimal()) {
+                    System.out.println("The IP address in binary form: " + ipAddress.getBinaryAddress());
+                } else {
+                    System.out.println("The IP address in decimal form: " + ipAddress.getDecimalAddress());
+                }
+
             } else {
                 System.out.println();
                 System.out.println("The IP address is incorrect (invalid value or form)!");
@@ -58,15 +48,20 @@ public class Menu {
     }
 
     public void handleOptions() {
-        if (isFirst) {
-            printWelcome();
-        }
-
         String input = "";
         Scanner reader = new Scanner(System.in);
 
+        if (isFirst) {
+            System.out.println("Welcome to the IP address changer program!");
+            isFirst = false;
+        }
+
         while (true) {
-            printOptions();
+            System.out.println("Please, choose from the options below:");
+            System.out.println("1 - IP address change (between decimal and binary form)");
+            System.out.println("2 - Exam");
+            System.out.println("3 - Exit the program");
+
             input = reader.nextLine();
 
             switch (input) {
@@ -75,7 +70,7 @@ public class Menu {
                     break;
 
                 case "2":
-                    makeExam();
+                    Exam exam = new Exam();
                     break;
 
                 case "3":

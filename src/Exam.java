@@ -10,7 +10,10 @@ public class Exam {
         doExam();
     }
 
-    private int evaluateAnswer(String answer, String expectedAnswer) {
+    private int readAndEvaluateAnswer(String expectedAnswer) {
+        Scanner reader = new Scanner(System.in);
+        String answer = reader.nextLine();
+
         if (!IPAddress.checkIPAddressIsValid(answer)) {
             return 0;
         }
@@ -30,12 +33,6 @@ public class Exam {
 
             return earnedPoints;
         }
-
-    }
-
-    private int readAndEvaluateAnswer(String expectedAnswer) {
-        Scanner reader = new Scanner(System.in);
-        return evaluateAnswer(reader.nextLine(), expectedAnswer);
     }
 
     private int generateAndEvaluateTask() {
@@ -53,23 +50,19 @@ public class Exam {
         }
     }
 
-    private int giveGrade(double scoreProportion) {
+    private void getExamResult(int earnedPoints) {
         double[] pointsBoundaries = {0.5, 0.65, 0.8, 0.9};
+        double scoreProportion = (double) earnedPoints / MAX_POINTS;
+        int grade = 1;
 
         for (int i = 0; i < pointsBoundaries.length; i++) {
             if (scoreProportion < pointsBoundaries[i]) {
-                return i + 1;
+                grade = i + 1;
             }
         }
 
-        return 5;
-    }
-
-    private void printScoreAndGrade(int earnedPoints) {
-        double scoreProportion = (double) earnedPoints / MAX_POINTS;
-
-        System.out.println("You earned" + earnedPoints + " points from the " + MAX_POINTS + " this is " + (scoreProportion * 100) + "%.");
-        System.out.println("Your grade: " + giveGrade(scoreProportion));
+        System.out.println("You earned " + earnedPoints + " points from the " + MAX_POINTS + " this is " + (scoreProportion * 100) + "%.");
+        System.out.println("Your grade: " + grade);
         System.out.println();
     }
 
@@ -83,6 +76,6 @@ public class Exam {
             earnedPoints += generateAndEvaluateTask();
         }
 
-        printScoreAndGrade(earnedPoints);
+        getExamResult(earnedPoints);
     }
 }
